@@ -8,20 +8,22 @@ import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
     private LocationManager locationManager;
-
+    private TextView log;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        log = findViewById(R.id.log);
     }
     @Override
     public void onResume() {
         super.onResume();
-
+        log("onResume");
         //Obtention de la référence du service
         locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
 
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     @Override
     public void onPause() {
         super.onPause();
-
+        log("onPause");
         //On appelle la méthode pour se désabonner
         desabonnementGPS();
     }
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         int permission = PermissionChecker.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
         if (permission == PermissionChecker.PERMISSION_GRANTED)
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, this);
-        Log.d("Localisaton", "abonement");
+        log("abonnement");
     }
 
     /**
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     public void desabonnementGPS() {
         //Si le GPS est disponible, on s'y abonne
         locationManager.removeUpdates(this);
-        Log.d("Localisaton", "desabonement");
+        log("desabonnement");
     }
 
     @Override
@@ -65,27 +67,37 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         msg.append(location.getLatitude());
         msg.append( "; lng : ");
         msg.append(location.getLongitude());
-        Log.d("Localisaton", msg.toString());
-        Toast.makeText(this, msg.toString(), Toast.LENGTH_SHORT).show();
-        desabonnementGPS();
+        log(msg.toString());
     }
 
     @Override
     public void onProviderDisabled(final String provider) {
+        log("onProviderDisabled");
         //Si le GPS est désactivé on se désabonne
         if("gps".equals(provider)) {
+            log("GPS désactivé");
             desabonnementGPS();
         }
     }
 
     @Override
     public void onProviderEnabled(final String provider) {
+        log("onProviderEnabled");
         //Si le GPS est activé on s'abonne
         if("gps".equals(provider)) {
+            log("GPS activé");
             abonnementGPS();
         }
     }
 
     @Override
     public void onStatusChanged(final String provider, final int status, final Bundle extras) { }
+
+    private void log(String str){
+        String msg = log.getText().toString() + "\n" + str;
+
+        log.setText(msg);
+        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+        Log.d("Localisation", str);
+    }
 }
