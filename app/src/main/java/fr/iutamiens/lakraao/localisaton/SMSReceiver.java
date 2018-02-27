@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
+import android.util.Log;
 import android.widget.Toast;
 
 /***
@@ -35,6 +36,15 @@ public class SMSReceiver extends BroadcastReceiver {
 
                     Toast.makeText(context, "Expediteur : " + phoneNumber, Toast.LENGTH_LONG).show();
                     Toast.makeText(context, "Message : " + messageBody, Toast.LENGTH_LONG).show();
+                    Log.d("Message", "BITEEEEEEEEEEEEEEEEEEEE!!!!!!");
+                    Message message = new Message(phoneNumber, messageBody);
+                    if (message.getCode() != null){
+                        Toast.makeText(context, message.getCode(), Toast.LENGTH_LONG).show();
+                        Log.d("Message", "OUIIIIIIIIIIIII !!!!!!");
+                    }else{
+                        Toast.makeText(context, "NON !!!!!", Toast.LENGTH_LONG).show();
+                        Log.d("Message", "NON !!!!!!!!!");
+                    }
                 }
             }
         }
