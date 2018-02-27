@@ -21,9 +21,8 @@ public class Message {
     public Message(String sender, String content){
         this.content = content;
         this.sender = sender;
-        Log.d("Message", content.substring(0, head.length()));
-        if (content.substring(0, head.length()) == head){
-            code = content.substring(head.length() + 1, content.length());
+        if (content.length() > head.length() && content.substring(0, head.length()).equals(head)){
+            code = content.substring(head.length(), content.length());
         }else{
             code = null;
         }
@@ -34,7 +33,7 @@ public class Message {
      * @return message's content
      */
     public String getCode(){
-        return content;
+        return code;
     }
 
     /***

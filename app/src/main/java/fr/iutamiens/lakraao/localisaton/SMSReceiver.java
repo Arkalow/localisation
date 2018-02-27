@@ -31,19 +31,16 @@ public class SMSReceiver extends BroadcastReceiver {
                 }
 
                 if (messages.length > -1){
-                    final String messageBody = messages[0].getMessageBody();
-                    final String phoneNumber = messages[0].getDisplayOriginatingAddress();
 
-                    Toast.makeText(context, "Expediteur : " + phoneNumber, Toast.LENGTH_LONG).show();
-                    Toast.makeText(context, "Message : " + messageBody, Toast.LENGTH_LONG).show();
-                    Log.d("Message", "BITEEEEEEEEEEEEEEEEEEEE!!!!!!");
-                    Message message = new Message(phoneNumber, messageBody);
+                    Message message = new Message(
+                            messages[0].getDisplayOriginatingAddress(),
+                            messages[0].getMessageBody()
+                    );
+
                     if (message.getCode() != null){
-                        Toast.makeText(context, message.getCode(), Toast.LENGTH_LONG).show();
-                        Log.d("Message", "OUIIIIIIIIIIIII !!!!!!");
+                        Log.d("Message", message.getCode());
                     }else{
-                        Toast.makeText(context, "NON !!!!!", Toast.LENGTH_LONG).show();
-                        Log.d("Message", "NON !!!!!!!!!");
+                        Log.d("Message", "Ce n'est pas un message codé");
                     }
                 }
             }
