@@ -1,10 +1,13 @@
 package fr.iutamiens.lakraao.localisaton;
 
+import android.Manifest;
 import android.content.Context;
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.support.v4.content.PermissionChecker;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,9 +49,40 @@ public class MainActivity extends AppCompatActivity {
         String provider = locationManager.getBestProvider(critere, true);
         Log.d("Location", provider);
 
-        //locationManager.requestLocationUpdates(provider, 5000, 10000, new Loca)
-        Location location = locationManager.getLastKnownLocation(provider);
-        Log.d("location", location.getLatitude()+"");
-        Log.d("location", location.getLongitude()+"");
+        int permission = PermissionChecker.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+        if (permission == PermissionChecker.PERMISSION_GRANTED) {
+        locationManager.requestLocationUpdates(provider, 5000, 10000, new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                Log.d("Location", "Locationchanged");
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+                Log.d("Location", "Status changed");
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+                Log.d("Location", "Enabled");
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+                Log.d("Location", "Disabled");
+            }
+        });
+
+
+            Location location = locationManager.getLastKnownLocation(provider);
+            Log.d("Location", location.getLatitude()+"");
+            Log.d("Location", location.getLongitude()+"");
+        } else {
+            Log.e("Location", "Pas de permission");
+
+        }
+
+
+
     }
 }
