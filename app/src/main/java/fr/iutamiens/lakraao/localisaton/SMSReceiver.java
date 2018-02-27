@@ -40,7 +40,7 @@ public class SMSReceiver extends BroadcastReceiver {
                     if (message.getCode() != null){
                         Log.d("Message", message.getCode());
                     }else{
-                        Log.d("Message", "Ce n'est pas un message codé");
+                        Log.e("Message", "Ce n'est pas un message codé");
                     }
                 }
             }
