@@ -8,6 +8,8 @@ import android.util.Log;
 public class MainActivity extends AppCompatActivity implements GPSListener, SMSReceiverListener{
 
     private GPS gps;
+    private String num;
+    private Message message;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,19 +20,35 @@ public class MainActivity extends AppCompatActivity implements GPSListener, SMSR
         SMSReceiver.addListener(this);
     }
 
+    /***
+     * Détection de la position GPS
+     * @param location nouvelle position
+     */
     @Override
     public void positionChanged(Location location) {
+        StringBuilder str = new StringBuilder();
+        str.append("Latitude : ");
+        str.append(location.getLatitude());
+        str.append("\n");
+        str.append("Longitude : ");
+        str.append(location.getLongitude());
         Log.d("Main", "Position changé");
-        Log.d("Main", "Latitude" + location.getLatitude());
-        Log.d("Main", "Longitude" + location.getLongitude());
+        Log.d("Main", str.toString());
         gps.desabonnementGPS();
+        Message message = new Message(num, str.toString());
+        message.send();
     }
 
+    /***
+     * Détection d'un message
+     * @param message message reçu
+     */
     @Override
     public void receiveMessage(Message message) {
         Log.d("Main", "Code reçu");
         if (message.getCode().equals("location")){
             gps.abonnementGPS();
+            num = message.getnum();
         }else{
             Log.e("Main", "Erreur code");
         }
