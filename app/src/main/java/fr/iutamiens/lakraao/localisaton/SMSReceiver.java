@@ -15,6 +15,7 @@ import android.widget.Toast;
 public class SMSReceiver extends BroadcastReceiver {
 
     private final String ACTION_RECEIVE_SMS = "android.provider.Telephony.SMS_RECEIVED";
+    private GPS gps;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -39,6 +40,7 @@ public class SMSReceiver extends BroadcastReceiver {
 
                     if (message.getCode() != null){
                         Log.d("Message", message.getCode());
+
                     }else{
                         Log.e("Message", "Ce n'est pas un message codé");
                     }

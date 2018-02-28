@@ -6,11 +6,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.v4.content.PermissionChecker;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import static android.content.Context.LOCATION_SERVICE;
 
@@ -35,7 +32,7 @@ public class GPS implements LocationListener {
      */
     public void abonnementGPS() {
         //On s'abonne
-        int permission = PermissionChecker.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+        int permission = PermissionChecker.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION);
         if (permission == PermissionChecker.PERMISSION_GRANTED)
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, this);
         Log.d("GPS", "abonnement");
