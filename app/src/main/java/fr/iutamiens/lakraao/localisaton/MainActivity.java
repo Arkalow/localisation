@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity implements GPSListener{
         setContentView(R.layout.activity_main);
 
         gps = new GPS(this);
+        gps.addListener(this);
     }
 
     public void receive(String sender, String code){
@@ -25,5 +26,6 @@ public class MainActivity extends AppCompatActivity implements GPSListener{
         Log.d("Main", "Position changé");
         Log.d("Main", "Latitude" + location.getLatitude());
         Log.d("Main", "Longitude" + location.getLongitude());
+        gps.desabonnementGPS();
     }
 }

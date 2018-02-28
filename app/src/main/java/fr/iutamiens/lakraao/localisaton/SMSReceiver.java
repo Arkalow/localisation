@@ -12,7 +12,7 @@ import android.widget.Toast;
  * Class qui permet de détecter l'arrivé d'un message sur le telephone
  * Created by omer on 26/02/18.
  */
-public class SMSReceiver extends BroadcastReceiver {
+public class SMSReceiver extends BroadcastReceiver implements SMSReceiverListener{
 
     private final String ACTION_RECEIVE_SMS = "android.provider.Telephony.SMS_RECEIVED";
     private GPS gps;
