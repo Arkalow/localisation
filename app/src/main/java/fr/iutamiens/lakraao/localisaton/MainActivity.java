@@ -1,10 +1,11 @@
 package fr.iutamiens.lakraao.localisaton;
 
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GPSListener{
 
     private GPS gps;
     @Override
@@ -19,4 +20,10 @@ public class MainActivity extends AppCompatActivity {
         gps.abonnementGPS();
     }
 
+    @Override
+    public void positionChanged(Location location) {
+        Log.d("Main", "Position changé");
+        Log.d("Main", "Latitude" + location.getLatitude());
+        Log.d("Main", "Longitude" + location.getLongitude());
+    }
 }

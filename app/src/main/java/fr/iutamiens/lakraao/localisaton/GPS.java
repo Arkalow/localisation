@@ -9,11 +9,14 @@ import android.support.v4.content.PermissionChecker;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.List;
+
 import static android.content.Context.LOCATION_SERVICE;
 
 public class GPS implements LocationListener {
     private LocationManager locationManager;
     private Context context;
+    private List<GPSListener> listeners;
 
     public GPS(Context context){
         this.context = context;
@@ -49,12 +52,14 @@ public class GPS implements LocationListener {
 
     @Override
     public void onLocationChanged(final Location location) {
-        //On affiche dans un Toat la nouvelle Localisation
-        final StringBuilder msg = new StringBuilder("lat : ");
+        for (GPSListener listener : listeners){
+            listener.positionChanged(location);
+        }
+        /*final StringBuilder msg = new StringBuilder("lat : ");
         msg.append(location.getLatitude());
         msg.append( "; lng : ");
         msg.append(location.getLongitude());
-        Log.d("GPS", msg.toString());
+        Log.d("GPS", msg.toString());*/
     }
 
     @Override
@@ -80,4 +85,11 @@ public class GPS implements LocationListener {
     @Override
     public void onStatusChanged(final String provider, final int status, final Bundle extras) { }
 
+
+    public void addListener(GPSListener listener){
+        listeners.add(listener);
+    }
+    public void remove(GPSListener listener){
+        listeners.remove(listener);
+    }
 }
