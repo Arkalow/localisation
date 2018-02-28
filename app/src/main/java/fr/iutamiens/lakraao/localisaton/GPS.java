@@ -9,6 +9,7 @@ import android.support.v4.content.PermissionChecker;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.Context.LOCATION_SERVICE;
@@ -20,14 +21,9 @@ public class GPS implements LocationListener {
 
     public GPS(Context context){
         this.context = context;
-
+        listeners = new ArrayList<>();
         //Obtention de la référence du service
         locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-
-        //Si le GPS est disponible, on s'y abonne
-        if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            abonnementGPS();
-        }
     }
 
     /**

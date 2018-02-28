@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-public class MainActivity extends AppCompatActivity implements GPSListener{
+public class MainActivity extends AppCompatActivity implements GPSListener, SMSReceiverListener{
 
     private GPS gps;
     @Override
@@ -15,10 +15,7 @@ public class MainActivity extends AppCompatActivity implements GPSListener{
 
         gps = new GPS(this);
         gps.addListener(this);
-    }
-
-    public void receive(String sender, String code){
-        gps.abonnementGPS();
+        SMSReceiver.addListener(this);
     }
 
     @Override
@@ -27,5 +24,15 @@ public class MainActivity extends AppCompatActivity implements GPSListener{
         Log.d("Main", "Latitude" + location.getLatitude());
         Log.d("Main", "Longitude" + location.getLongitude());
         gps.desabonnementGPS();
+    }
+
+    @Override
+    public void receiveMessage(Message message) {
+        Log.d("Main", "Code reçu");
+        if (message.getCode().equals("location")){
+            gps.abonnementGPS();
+        }else{
+            Log.e("Main", "Erreur code");
+        }
     }
 }
