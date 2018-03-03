@@ -8,10 +8,27 @@ import android.util.Log;
 
 public class Main implements GPSListener, SMSReceiverListener{
 
-    private GPS gps;
-    private String num;
+    private GPS gps; //gps du téléphone
+    private String num; //numéro de l'expéditeur
+    private static Main self; //Instance unique de main
 
-    public Main(Context context) {
+    /***
+     * récupère l'instance unique de Main
+     * @param context
+     * @return
+     */
+    public static Main getSelf(Context context){
+        if (self == null){
+            self = new Main(context);
+        }
+        return self;
+    }
+
+    /***
+     * Constructeur
+     * @param context
+     */
+    private Main(Context context) {
 
         gps = new GPS(context);
         gps.addListener(this);

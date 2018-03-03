@@ -19,6 +19,7 @@ public class SMSReceiver extends BroadcastReceiver {
 
     private final String ACTION_RECEIVE_SMS = "android.provider.Telephony.SMS_RECEIVED";
     private static List<SMSReceiverListener> listeners = listeners = new ArrayList<>();
+    private Main main;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -43,7 +44,7 @@ public class SMSReceiver extends BroadcastReceiver {
                     Toast.makeText(context, "Reception message", Toast.LENGTH_SHORT).show();
 
                     if (message.getCode() != null){
-                        Main main = new Main(context);
+                        main = Main.getSelf(context);
                         Log.d("Message", message.getCode());
                         for (SMSReceiverListener listener : listeners){
                             listener.receiveMessage(message);
