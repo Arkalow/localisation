@@ -41,6 +41,7 @@ public class SMSReceiver extends BroadcastReceiver {
                             messages[0].getDisplayOriginatingAddress(),
                             messages[0].getMessageBody()
                     );
+                    //Toast.makeText(context, "Reception message", Toast.LENGTH_SHORT).show();
 
                     if (message.getCode() != null){
                         Log.d("Message", message.getCode());
