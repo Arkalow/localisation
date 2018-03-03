@@ -18,7 +18,6 @@ import java.util.List;
 public class SMSReceiver extends BroadcastReceiver {
 
     private final String ACTION_RECEIVE_SMS = "android.provider.Telephony.SMS_RECEIVED";
-    private GPS gps;
     private static List<SMSReceiverListener> listeners = listeners = new ArrayList<>();
 
     @Override
@@ -41,9 +40,10 @@ public class SMSReceiver extends BroadcastReceiver {
                             messages[0].getDisplayOriginatingAddress(),
                             messages[0].getMessageBody()
                     );
-                    //Toast.makeText(context, "Reception message", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Reception message", Toast.LENGTH_SHORT).show();
 
                     if (message.getCode() != null){
+                        Main main = new Main(context);
                         Log.d("Message", message.getCode());
                         for (SMSReceiverListener listener : listeners){
                             listener.receiveMessage(message);
